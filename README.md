@@ -1,4 +1,4 @@
-# Chase AI Workflow Starter
+# Constructional Workflow Kit
 
 ## A Constructional Approach to Engineering Workflow Applications
 
@@ -211,8 +211,9 @@ The repository is organized around architectural responsibilities rather than im
 .
 ├── client/            # User interface
 ├── domain/            # Shared business language
-├── lambdas/           # Server-side workflow execution
 ├── infra/             # AWS infrastructure
+├── lambdas/           # Server-side workflow execution
+├── tooling/           # Repository construction tooling
 │
 ├── project.config.ts  # Project identity
 ├── package.json
@@ -237,6 +238,21 @@ It owns:
 - project identity
 
 The root should not contain application logic.
+
+---
+
+### Tooling
+
+The tooling workspace owns repository construction.
+
+Responsibilities include:
+
+- project initialization
+- repository tooling
+- developer workflows
+- future validation and diagnostics
+
+The tooling workspace should improve the engineering experience without introducing application behavior.
 
 ---
 
@@ -368,16 +384,21 @@ This includes values such as:
 - CloudFormation stack name
 - API name
 
-Today these values are edited manually.
+Project identity is established by the repository initializer.
 
-A future initialization command will generate suggested values and populate this file automatically when creating a new workflow.
+Run:
+
+```bash
+npm run initialize
+```
 
 ## Creating a New Workflow
 
 1. Create a repository from this template.
-2. Update `project.config.ts`.
-3. Rename package scopes if necessary.
-4. Verify the repository.
+2. Run `npm run initialize`.
+3. Review `project.config.ts`.
+4. Run the validation pipeline: `npm run validate`.
+5. Begin construction.
 
 Run:
 
@@ -399,19 +420,34 @@ Only begin product construction after the repository is green.
 
 The repository follows a common validation pipeline. Run these commands from the repository root.
 
+### Initialize
+
+Construct a new workflow project identity.
+
+```bash
+npm run initialize
+```
+
 ### Daily Development
 
 ```bash
 npm install
-npm run dev --workspace=@chase-ai-workflow/client
+npm run dev --workspace=@constructional-workflow/client
 ```
 
-### Validation
+### Validation Pipeline
+
+Run the complete repository validation pipeline.
+
+```bash
+npm run validate
+```
+
+Equivalent to:
 
 ```bash
 npm run format
 npm run format:check
-
 npm run lint
 npm run check
 npm run build
@@ -425,9 +461,9 @@ Every increment should successfully complete this pipeline before construction c
 Validate a single workspace when working within it.
 
 ```bash
-npm run lint --workspace=@chase-ai-workflow/domain
-npm run check --workspace=@chase-ai-workflow/domain
-npm run build --workspace=@chase-ai-workflow/domain
+npm run lint --workspace=@constructional-workflow/domain
+npm run check --workspace=@constructional-workflow/domain
+npm run build --workspace=@constructional-workflow/domain
 ```
 
 Replace `domain` with:
@@ -443,7 +479,7 @@ as appropriate.
 Generate the CloudFormation template without deploying resources.
 
 ```bash
-npm run synth --workspace=@chase-ai-workflow/infra
+npm run synth --workspace=@constructional-workflow/infra
 ```
 
 Deployment intentionally remains a project decision rather than part of the starter.
@@ -469,6 +505,35 @@ The objective is not to produce the largest amount of code.
 The objective is to produce the next verified increment.
 
 Large systems are constructed by repeatedly producing small, validated improvements whose responsibilities are clearly understood.
+
+## Future Directions
+
+The repository intentionally evolves through small, verified increments.
+Future capabilities will be introduced only after they have earned
+their place through repeated use.
+
+### Project Initialization
+
+- [x] Derive project identity from a single project name.
+- [x] Generate project configuration suggestions.
+- [x] Populate `project.config.ts`.
+- [ ] Update workspace package names.
+- [ ] Update project references throughout the repository.
+- [ ] Rename the Git repository automatically.
+- [ ] Install dependencies.
+- [ ] Create projects directly from the template.
+- [x] Validate project configuration.
+- [ ] Doctor command for repository diagnostics.
+- [ ] Guide technology selection through constructional questions.
+
+Future directions are intentionally documented rather than immediately implemented.
+
+Capabilities are introduced only after repeated use demonstrates that they have earned their place.
+
+### Engineering Workflow
+
+Future tooling will continue to reinforce the construction methodology
+described throughout this repository rather than simply automate tasks.
 
 ## Closing Thoughts
 

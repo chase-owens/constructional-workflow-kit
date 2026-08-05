@@ -1,5 +1,5 @@
 {
-  "name": "@chase-ai-workflow/client",
+  "name": "@constructional-workflow/client",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -13,7 +13,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@chase-ai-workflow/domain": "0.1.0"
+    "@constructional-workflow/domain": "0.1.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^7.0.1",

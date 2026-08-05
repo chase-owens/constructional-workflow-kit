@@ -1,5 +1,5 @@
 {
-  "name": "@chase-ai-workflow/infra",
+  "name": "@constructional-workflow/infra",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -10,7 +10,7 @@
     "synth": "cdk synth"
   },
   "dependencies": {
-    "@chase-ai-workflow/lambdas": "0.1.0",
+    "@constructional-workflow/lambdas": "0.1.0",
     "aws-cdk-lib": "^2.0.0",
     "constructs": "^10.0.0"
   },

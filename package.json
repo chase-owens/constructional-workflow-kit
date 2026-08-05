@@ -1,5 +1,5 @@
 {
-  "name": "chase-ai-workflow-starter",
+  "name": "constructional-workflow-starter",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -10,17 +10,19 @@
   "workspaces": [
     "client",
     "domain",
+    "infra",
     "lambdas",
-    "infra"
+    "tooling"
   ],
   "scripts": {
     "build": "nx run-many -t build",
     "check": "nx run-many -t check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "initialize": "npm run initialize --workspace=@constructional-workflow/tooling",
     "lint": "nx run-many -t lint",
-    "synth": "npm run synth --workspace=@chase-ai-workflow/infra",
-    "validate": "npm run format:check && npm run lint && npm run check && npm run synth"
+    "synth": "npm run synth --workspace=@constructional-workflow/infra",
+    "validate": "npm run format npm run format:check && npm run lint && npm run check && npm run synth"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -37,6 +39,7 @@
   },
   "allowScripts": {
     "nx@23.1.1": true,
-    "esbuild@0.25.12": true
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@chase-ai-workflow/lambdas",
+  "name": "@constructional-workflow/lambdas",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -9,7 +9,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@chase-ai-workflow/domain": "0.1.0"
+    "@constructional-workflow/domain": "0.1.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.0",
