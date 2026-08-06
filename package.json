@@ -22,7 +22,7 @@
     "initialize": "npm run initialize --workspace=@constructional-workflow/tooling",
     "lint": "nx run-many -t lint",
     "synth": "npm run synth --workspace=@constructional-workflow/infra",
-    "validate": "npm run format && npm run format:check && npm run lint && npm run check && npm run synth"
+    "validate": "npm run format:check && npm run lint && npm run check && npm run synth"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
