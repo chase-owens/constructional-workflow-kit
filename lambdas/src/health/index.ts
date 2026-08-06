@@ -1,4 +1,4 @@
-import { workflowStatusSchema } from "@chase-ai-workflow/domain";
+import { workflowStatusSchema } from "@constructional-workflow/domain";
 import type { APIGatewayProxyHandlerV2 } from "aws-lambda";
 
 import { jsonResponse } from "../shared/response.js";
