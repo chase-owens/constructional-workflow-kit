@@ -1,4 +1,4 @@
-name: Validate
+name: Validate Pipeline
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: validate-${{github.workflow}}-${{github.ref}}
+  group: validate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -34,5 +34,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run validate pipeline
+      - name: Run validation pipeline
         run: npm run validate
