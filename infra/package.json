@@ -1,6 +1,6 @@
 {
   "name": "@constructional-workflow/infra",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "synth": "cdk synth"
   },
   "dependencies": {
-    "@constructional-workflow/lambdas": "0.1.0",
+    "@constructional-workflow/lambdas": "1.0.0",
     "aws-cdk-lib": "^2.0.0",
     "constructs": "^10.0.0"
   },
