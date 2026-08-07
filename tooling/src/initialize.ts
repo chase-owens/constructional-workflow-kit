@@ -3,6 +3,18 @@ import path from "node:path";
 
 import { confirm, input } from "@inquirer/prompts";
 
+interface PackageJson {
+  name?: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
+}
+
+const STARTER_SCOPE = "@constructional-workflow";
+
+const WORKSPACES = ["client", "domain", "infra", "lambdas", "tooling"] as const;
+
 interface ProjectIdentity {
   projectName: string;
   displayName: string;
@@ -28,6 +40,22 @@ const validateProjectName = (value: string): true | string => {
   }
 
   return true;
+};
+
+const rewriteDependencyScope = (
+  dependencies: Record<string, string> | undefined,
+  packageScope: string
+): Record<string, string> | undefined => {
+  if (!dependencies) {
+    return undefined;
+  }
+
+  return Object.fromEntries(
+    Object.entries(dependencies).map(([name, version]) => [
+      name.startsWith(`${STARTER_SCOPE}/`) ? name.replace(STARTER_SCOPE, packageScope) : name,
+      version
+    ])
+  );
 };
 
 const toWords = (value: string): string[] => value.trim().split("-").filter(Boolean);
@@ -70,6 +98,34 @@ const printSuggestions = (identity: ProjectIdentity): void => {
   console.log(`  API name:             ${identity.apiName}\n`);
 };
 
+const updateWorkspacePackageJsons = async (identity: ProjectIdentity): Promise<void> => {
+  for (const workspace of WORKSPACES) {
+    const packageJsonPath = path.join(REPOSITORY_ROOT, workspace, "package.json");
+
+    const contents = await readFile(packageJsonPath, "utf8");
+    const packageJson = JSON.parse(contents) as PackageJson;
+
+    const updatedPackageJson: PackageJson = {
+      ...packageJson,
+
+      name: `${identity.packageScope}/${workspace}`,
+
+      dependencies: rewriteDependencyScope(packageJson.dependencies, identity.packageScope),
+
+      devDependencies: rewriteDependencyScope(packageJson.devDependencies, identity.packageScope),
+
+      peerDependencies: rewriteDependencyScope(packageJson.peerDependencies, identity.packageScope),
+
+      optionalDependencies: rewriteDependencyScope(
+        packageJson.optionalDependencies,
+        identity.packageScope
+      )
+    };
+
+    await writeFile(packageJsonPath, `${JSON.stringify(updatedPackageJson, null, 2)}\n`, "utf8");
+  }
+};
+
 export const initialize = async (): Promise<void> => {
   console.log("\nConstructional Workflow Kit");
   console.log("Let's construct your next workflow application.\n");
@@ -91,7 +147,7 @@ export const initialize = async (): Promise<void> => {
   printSuggestions(suggestions);
 
   const accepted = await confirm({
-    message: "Write these values to project.config.ts?",
+    message: "Apply this project identity to the repository?",
     default: true
   });
 
@@ -109,8 +165,11 @@ export const initialize = async (): Promise<void> => {
   }
 
   await writeFile(PROJECT_CONFIG_PATH, renderProjectConfig(suggestions), "utf8");
+  await updateWorkspacePackageJsons(suggestions);
 
   console.log("\n✓ Updated project.config.ts");
+  console.log("✓ Updated workspace package identities");
+  console.log(`✓ Package scope set to ${suggestions.packageScope}`);
   console.log(`✓ Stack name set to ${suggestions.stackName}`);
 
   console.log("\nNext steps");
