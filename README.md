@@ -418,6 +418,14 @@ Only begin product construction after the repository is green.
 
 ## Development/Validation Commands
 
+### Get Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
 The repository follows a common validation pipeline. Run these commands from the repository root.
 
 ### Initialize
@@ -431,8 +439,7 @@ npm run initialize
 ### Daily Development
 
 ```bash
-npm install
-npm run dev --workspace=@constructional-workflow/client
+npm run dev -w client
 ```
 
 ### Validation Pipeline
