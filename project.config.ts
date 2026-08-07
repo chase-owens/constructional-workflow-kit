@@ -4,5 +4,5 @@ export const project = {
   packageScope: "@constructional-workflow",
 
   stackName: "ChaseAiWorkflowStack",
-  apiname: "constructional-workflow-api"
+  apiName: "constructional-workflow-api"
 } as const;
