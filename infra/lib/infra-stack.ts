@@ -21,7 +21,7 @@ export class WorkflowStack extends Stack {
     });
 
     const api = new HttpApi(this, "WorkflowApi", {
-      apiName: project.apiname
+      apiName: project.apiName
     });
 
     api.addRoutes({
